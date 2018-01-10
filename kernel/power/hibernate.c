@@ -521,7 +521,7 @@ int hibernation_restore(int platform_mode)
  */
 int hibernation_platform_enter(void)
 {
-	int error;
+	int error, nr_calls = 0;
 
 	if (!hibernation_ops)
 		return -ENOSYS;
