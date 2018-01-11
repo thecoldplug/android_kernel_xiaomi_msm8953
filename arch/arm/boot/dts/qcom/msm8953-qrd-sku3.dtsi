@@ -89,17 +89,26 @@
 
 &dsi_nt35532_fhd_vid {
 	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
-
 };
 
 &dsi_nt35596_fhd_vid {
 	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
-
 };
 
 &dsi_nt35596_tianma_fhd_vid {
 	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
+};
 
+&dsi_otm1911_fhd_vid {
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
+};
+
+&dsi_r63350_ebbg_fhd_vid {
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
+};
+
+&dsi_ili9885_boe_fhd_vid {
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
 };
 
 &dsi_r69006_1080p_cmd {
@@ -107,10 +116,6 @@
 };
 
 &dsi_r69006_1080p_video {
-	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
-};
-
-&dsi_r63350_fhd_vid {
 	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
 };
 

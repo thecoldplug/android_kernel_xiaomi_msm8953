@@ -46,6 +46,8 @@ static struct mdss_dsi_data *mdss_dsi_res;
 
 static struct pm_qos_request mdss_dsi_pm_qos_request;
 
+int panel_suspend_reset_flag = 0;
+
 static void mdss_dsi_pm_qos_add_request(struct mdss_dsi_ctrl_pdata *ctrl_pdata)
 {
 	struct irq_info *irq_info;
@@ -295,6 +297,13 @@ static int mdss_dsi_panel_power_off(struct mdss_panel_data *pdata)
 
 	if (mdss_dsi_pinctrl_set_state(ctrl_pdata, false))
 		pr_debug("reset disable: pinctrl not enabled\n");
+
+	if (panel_suspend_reset_flag == 2) {
+		msleep(1); //delay 1ms
+	}
+	if (panel_suspend_reset_flag == 3) {
+		msleep(4); //delay 4ms
+	}
 
 	ret = msm_dss_enable_vreg(
 		ctrl_pdata->panel_power_data.vreg_config,
@@ -2816,6 +2825,7 @@ static struct device_node *mdss_dsi_pref_prim_panel(
  *
  * returns pointer to panel node on success, NULL on error.
  */
+char panel_name[MDSS_MAX_PANEL_LEN] = "";
 static struct device_node *mdss_dsi_find_panel_of_node(
 		struct platform_device *pdev, char *panel_cfg)
 {
@@ -2884,6 +2894,13 @@ static struct device_node *mdss_dsi_find_panel_of_node(
 			__func__, panel_cfg, panel_name);
 		if (!strcmp(panel_name, NONE_PANEL))
 			goto exit;
+
+		if (!strcmp(panel_name, "qcom,mdss_dsi_otm1911_fhd_video")){
+			panel_suspend_reset_flag = 2;
+			}
+		if (!strcmp(panel_name, "qcom,mdss_dsi_ili9885_boe_fhd_video")) {
+			panel_suspend_reset_flag = 3;
+			}
 
 		mdss_node = of_parse_phandle(pdev->dev.of_node,
 			"qcom,mdss-mdp", 0);
